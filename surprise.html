@@ -2,7 +2,7 @@
     <head>
         <title>Surprise!</title>
     </head>
-    <body>
+    <body style="display: none" id="body">
         <h1>Surprise!</h1>
         <p>This is the secret content!</p>
 
@@ -20,6 +20,8 @@
             // If the cookie is not set, redirect to the login page
             if (!accessGranted) {
                 window.location.href = "login.html";
+            } else {
+                document.getElementById("body").style = "display: block";
             }
         </script>
     </body>
