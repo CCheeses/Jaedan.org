@@ -50,3 +50,28 @@ body, html {
     margin: auto;
     width: 40%;
   }
+  
+  a {
+    color: white;
+    text-decoration: none;
+  }
+
+  /* Position the bottomright div */
+.bottomright {
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+}
+
+/* Style the link in the bottom right without underline */
+.bottomright a {
+  color: #fff;
+  padding: 10px 15px;
+  text-decoration: none;  /* This removes the underline */
+}
+
+/* Hover effect for the link */
+.bottomright a:hover {
+  color: #fff;
+  text-decoration: none; /* Ensure no underline on hover as well */
+}
