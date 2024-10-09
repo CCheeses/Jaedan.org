@@ -42,14 +42,14 @@ body {
 }
 
 /* Top center image (2nd image) - make it half the height */
-.image-grid img:nth-child(2) {
+.image-grid a:nth-child(2) {
     grid-row: span 0.5; /* Spans half the height of a row */
     grid-column: 2; /* Ensure it's in the center column */
     height: 175px; /* Make sure it fills its half-row */
 }
 
 /* Center column adjustments - 5th and 8th images aligned properly */
-.image-grid img:nth-child(3n+5) {
+.image-grid a:nth-child(3n+5) {
     grid-column: 2; /* Keep these in the center column */
     grid-row: span 1; /* Keep them at the normal row height */
     margin-top: -175px; /* Offset the center column to create staggered effect */
@@ -57,6 +57,7 @@ body {
 
 img {
     border-radius: 1em;
+    max-height: 350px;
 }
 
 /* Media query for smaller screens */
