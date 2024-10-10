@@ -85,7 +85,7 @@ img {
     /* Set the background image */
     background-image: 
         linear-gradient(to bottom, rgba(0, 0, 0, 0) 70%, rgba(0, 0, 0, 0.5) 100%),
-        url('https://www.w3schools.com/w3images/forestbridge.jpg');
+        url('images/background.jpg');
     /* Center the background image */
     background-position: center;
     /* Allow for vertical stretching */
