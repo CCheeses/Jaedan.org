@@ -4,27 +4,10 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet" href="surprise.css">
+        <script src="surprise.js" defer></script>
     </head>
     <body style="display: none" id="body">
         <h3 style="text-align:center; padding: 1em;">Happy Birthday Jaedan!</h3>
-        <script>
-            // Function to get the value of a specific cookie by name
-            function getCookie(name) {
-                const value = `; ${document.cookie}`;
-                const parts = value.split(`; ${name}=`);
-                if (parts.length === 2) return parts.pop().split(';').shift();
-            }
-
-            // Check if the accessGranted cookie is set
-            const accessGranted = getCookie("accessGranted");
-
-            // If the cookie is not set, redirect to the login page
-            if (!accessGranted) {
-                window.location.href = "login.html";
-            } else {
-                document.getElementById("body").style = "display: block";
-            }
-        </script>
         <div class="bgimg">
             <div class="grid-container">
                 <div class="image-grid">
