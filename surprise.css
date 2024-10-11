@@ -96,3 +96,25 @@ img {
     filter: blur(6px);
     z-index: -1;
 }
+
+.contributors {
+    background-color: white;
+    border-radius: 1em;
+    padding: 10px 10px 10px 10px;
+    margin-left: 20px;
+    margin-right: 20px;
+    margin-bottom: 30px;
+    font-family: "Courier New", Courier, monospace;
+    font-size: 20px;
+    text-align: center;
+}
+
+.contributorsinner {
+    border: 2px solid darkgray;
+    border-radius: 10px;
+}
+
+.contributors img {
+    height: 20px;
+    margin-top: -5px;
+}
