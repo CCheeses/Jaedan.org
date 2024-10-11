@@ -9,9 +9,12 @@
             <h1>Get out of here Jaedan</h1>
             <p>Enter the password to view the surprise:</p>
             <input type="password" id="passwordInput" placeholder="Enter password">
-            <button onclick="checkPassword()">Submit</button>
+            <button id="submitbutton">Submit</button>
             <p id="result"></p>
         </div>
+        <script>
+            document.getElementById("submitbutton").addEventListener("click", checkPassword())
+        </script>
 
         <script src="login.js"></script>
     </body>
