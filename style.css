@@ -35,6 +35,12 @@ body, html {
     bottom: 0;
     left: 16px;
   }
+
+  .topright {
+    position: absolute;
+    top: 0;
+    right: 16px;
+  }
   
   /* Position text in the middle */
   .middle {
