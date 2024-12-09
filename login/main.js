@@ -15,8 +15,8 @@ async function sha256(message) {
   return hashHex;
 }
 
-function checkPassword() {
-  var pwd = sha256(document.getElementById("passwordInput").value.trim());
+async function checkPassword() {
+  var pwd = await sha256(document.getElementById("passwordInput").value.trim());
   if (pwd === "c3e6d4b792ed9902b00c75b7dc75246f5b1f78e03adef3c24a9dcfcc39ea28f0") {
     document.cookie = "accessGranted=true; max-age=3600; path=/";
     window.location.href = "/surprise/";
