@@ -10,7 +10,7 @@ const accessGranted = getCookie("accessGranted");
 
 // If the cookie is not set, redirect to the login page
 if (!accessGranted) {
-    window.location.href = "login.html";
+    window.location.href = "/surprise/";
 } else {
     document.getElementById("body").style = "display: block";
 }
