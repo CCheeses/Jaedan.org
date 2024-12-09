@@ -22,5 +22,6 @@ function checkPassword() {
     window.location.href = "/surprise/";
   } else {
     document.getElementById("result").innerHTML = "Incorrect password!";
+    console.log(pwd + " " + document.getElementById("passwordInput").value.trim())
   }
 }
