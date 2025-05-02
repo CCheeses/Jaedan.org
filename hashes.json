@@ -1,7 +1,10 @@
 {
     "hashes":{
         "1.0.0":{
-            "cogs":"7ee715e312ab48d39f533534bfef02c1744239a65f705154940dca287a29814b"
+            "cogs":"7ee715e312ab48d39f533534bfef02c1744239a65f705154940dca287a29814b",
+            "data":"",
+            "tickets":"",
+            "util":""
         }
     }
 }
