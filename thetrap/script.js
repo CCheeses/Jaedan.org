@@ -27,7 +27,7 @@ function saveName() {
 async function toggle() {
     showLoading();
     try {
-        const url = `https://script.google.com/macros/s/AKfycbxNgto_LczhGvpkIpkotKelcfLSmfltUQf0qAUnMtuVDK1HHnD2nByQRY0iqF8WbyqyMQ/exec?name=${encodeURIComponent(name)}`;
+        const url = `https://script.google.com/macros/s/AKfycbxPv_iF9SAGkR3zcHIYSoPfoCm-BqZ-8cHePqR0pSddskJwo2qxenV56MhLZ4JRwR_LQg/exec?name=${encodeURIComponent(name)}`;
         const res = await fetch(url, {
             method: "GET",  // Changed to GET
             redirect: "follow"
