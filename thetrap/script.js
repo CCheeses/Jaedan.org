@@ -11,8 +11,11 @@ if (!name) {
     app.innerHTML = `
     <h2>Register your device w/ your name.</h2>
     <input id="nameInput" placeholder="Your name" />
-    <br><button onclick="saveName()">Continue</button>
+    <br><button id="saveBtn">Continue</button>
     `;
+
+    // Add event listener after creating the HTML
+    document.getElementById("saveBtn").addEventListener("click", saveName);
 } else {
     toggle();
 }
