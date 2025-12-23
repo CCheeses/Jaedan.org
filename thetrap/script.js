@@ -31,10 +31,9 @@ function saveName() {
 async function toggle() {
     showLoading();
     try {
-    const res = await fetch("https://script.google.com/macros/s/AKfycbxNgto_LczhGvpkIpkotKelcfLSmfltUQf0qAUnMtuVDK1HHnD2nByQRY0iqF8WbyqyMQ/exec", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ deviceId, name })
+    const res = await fetch(`https://script.google.com/macros/s/AKfycbxNgto_LczhGvpkIpkotKelcfLSmfltUQf0qAUnMtuVDK1HHnD2nByQRY0iqF8WbyqyMQ/exec?name=${encodeURIComponent(name)}`, {
+        method: "GET",
+        redirect: "follow"
     });
     const data = await res.json();
     showResult(data.status);
