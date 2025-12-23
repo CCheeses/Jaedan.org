@@ -32,8 +32,12 @@ async function toggle() {
     showLoading();
     try {
     const res = await fetch(`https://script.google.com/macros/s/AKfycbxNgto_LczhGvpkIpkotKelcfLSmfltUQf0qAUnMtuVDK1HHnD2nByQRY0iqF8WbyqyMQ/exec?name=${encodeURIComponent(name)}`, {
-        method: "GET",
-        redirect: "follow"
+        method: "POST",
+        headers: {
+            "Content-Type": "text/plain;charset=utf-8" 
+        },
+        body: JSON.stringify(name), // You can still send JSON data as the body content
+        redirect: "follow" // Essential for following the Google Apps Script redirect
     });
     const data = await res.json();
     showResult(data.status);
