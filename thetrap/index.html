@@ -163,7 +163,7 @@
     async function toggle() {
       showLoading();
       try {
-        const res = await fetch("YOUR_APPS_SCRIPT_EXEC_URL", {
+        const res = await fetch("https://script.google.com/macros/s/AKfycbzMtUP1uJr2ISH22hd3RZJE-C9pusbMuxnqnl66KYFYDbF_jq7skqPSscYssOdJdxmC/exec", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ deviceId, name })
