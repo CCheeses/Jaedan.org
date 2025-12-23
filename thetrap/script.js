@@ -3,8 +3,6 @@ const loader = document.getElementById("loader");
 function showLoading() { loader.classList.remove("hidden"); }
 function hideLoading() { loader.classList.add("hidden"); }
 
-let deviceId = localStorage.getItem("device_id");
-if (!deviceId) { deviceId = crypto.randomUUID(); localStorage.setItem("device_id", deviceId); }
 let name = localStorage.getItem("user_name");
 
 if (!name) {
@@ -13,8 +11,6 @@ if (!name) {
     <input id="nameInput" placeholder="Your name" />
     <br><button id="saveBtn">Continue</button>
     `;
-
-    // Add event listener after creating the HTML
     document.getElementById("saveBtn").addEventListener("click", saveName);
 } else {
     toggle();
@@ -31,20 +27,17 @@ function saveName() {
 async function toggle() {
     showLoading();
     try {
-    const res = await fetch(`https://script.google.com/macros/s/AKfycbxNgto_LczhGvpkIpkotKelcfLSmfltUQf0qAUnMtuVDK1HHnD2nByQRY0iqF8WbyqyMQ/exec?name=${encodeURIComponent(name)}`, {
-        method: "POST",
-        headers: {
-            "Content-Type": "text/plain;charset=utf-8" 
-        },
-        body: JSON.stringify(name), // You can still send JSON data as the body content
-        redirect: "follow" // Essential for following the Google Apps Script redirect
-    });
-    const data = await res.json();
-    showResult(data.status);
+        const url = `https://script.google.com/macros/s/AKfycbxNgto_LczhGvpkIpkotKelcfLSmfltUQf0qAUnMtuVDK1HHnD2nByQRY0iqF8WbyqyMQ/exec?name=${encodeURIComponent(name)}`;
+        const res = await fetch(url, {
+            method: "GET",  // Changed to GET
+            redirect: "follow"
+        });
+        const data = await res.json();
+        showResult(data.status);
     } catch (err) {
-    app.innerHTML = `<div class="status">Error: ${err.message}</div>`;
+        app.innerHTML = `<div class="status">Error: ${err.message}</div>`;
     } finally {
-    hideLoading();
+        hideLoading();
     }
 }
 
